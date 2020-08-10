@@ -6,7 +6,7 @@ import pickle
 
 class mergedFeed:
     def __init__(self):
-        self.feedURLs = ["https://xkcd.com/atom.xml", "https://reddit.com/r/unixporn.rss"]
+        self.feedURLs = ["https://xkcd.com/atom.xml", "https://reddit.com/.rss"]
         self.feeds = []
         self.bookmark = []
         self.parseFeeds()
@@ -57,6 +57,10 @@ class mergedFeed:
                         break
                     else:
                         pass
+                # edge case if the feed is a really fast updating feed and removed the placeholder article
+                elif len(self.feeds[n].entries) == i-1:
+                    for item in self.feeds[n].entries[::-1]:
+                        self.q.append(item)
                 else:
                     i += 1
 
